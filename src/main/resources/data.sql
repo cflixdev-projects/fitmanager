@@ -32,9 +32,6 @@ SELECT * FROM (VALUES
 WHERE NOT EXISTS (SELECT 1 FROM mitarbeiter);
 
 
-INSERT INTO mitarbeiter (vorname, nachname, email, passwort, rolle, typ, max_kurse_pro_woche, studio_id)
-VALUES ('Ines', 'Pawlak', 'ines.pawlak@fitaktiv.de', 'dHJhaW5lcjEyMw==', 'TRAINER', 'VOLLZEIT', 20, 2);
-
 INSERT INTO mitglied (vorname, nachname, email)
 SELECT * FROM (VALUES
     ('Anna', 'Weber', 'anna.weber@mail.de'),
