@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>FitManager - Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>FitManager - Adminansicht</h1>
+    <div class="user-info">
+        Angemeldet als <span id="admin-name"></span>
+        <button onclick="logout()">Abmelden</button>
+    </div>
+</header>
+
+<div class="tabs">
+    <button class="tab-button aktiv" onclick="tabWechseln('uebersicht', this)">Übersicht</button>
+    <button class="tab-button" onclick="tabWechseln('kurse', this)">Kurse</button>
+    <button class="tab-button" onclick="tabWechseln('mitarbeiter', this)">Mitarbeiter</button>
+</div>
+
+<!-- ================= TAB: UEBERSICHT ================= -->
+<div id="tab-uebersicht" class="tab-inhalt sichtbar">
+    <div class="kachel-reihe">
+        <div class="kachel">
+            <div class="zahl" id="anzahl-kurse">-</div>
+            <div class="label">Kurse gesamt</div>
+        </div>
+        <div class="kachel">
+            <div class="zahl" id="anzahl-mitarbeiter">-</div>
+            <div class="label">Mitarbeiter</div>
+        </div>
+        <div class="kachel">
+            <div class="zahl" id="anzahl-trainer">-</div>
+            <div class="label">Trainer</div>
+        </div>
+        <div class="kachel">
+            <div class="zahl" id="anzahl-krankmeldungen">-</div>
+            <div class="label">Krankmeldungen</div>
+        </div>
+    </div>
+
+    <h3>Wochenansicht (alle Kurse)</h3>
+    <div class="wochenansicht" id="wochenansicht"></div>
+    <div class="legende">
+        <span class="legende-punkt kk-gruen"></span> Findet statt
+        <span class="legende-punkt kk-gelb"></span> Vertretung
+        <span class="legende-punkt kk-rot"></span> Abgesagt
+    </div>
+
+    <h3>Letzte Benachrichtigungen an Mitglieder</h3>
+    <ul id="nachrichten-liste"></ul>
+</div>
+
+<!-- ================= TAB: KURSE ================= -->
+<div id="tab-kurse" class="tab-inhalt">
+    <div class="abschnitt-kopf">
+        <h2>Kursverwaltung</h2>
+        <div>
+            <button class="btn btn-grau" onclick="kurseVerteilen()">Trainer automatisch verteilen</button>
+            <button class="btn btn-gruen" onclick="kursFormularAnzeigen()">+ Neuer Kurs</button>
+        </div>
+    </div>
+    <p id="verteilen-hinweis" class="hinweis-text"></p>
+
+    <div id="kurs-formular" class="formular-box versteckt">
+        <input type="hidden" id="kurs-id">
+        <input type="text" id="kurs-name" placeholder="Kursname">
+        <select id="kurs-wochentag">
+            <option>Montag</option>
+            <option>Dienstag</option>
+            <option>Mittwoch</option>
+            <option>Donnerstag</option>
+            <option>Freitag</option>
+            <option>Samstag</option>
+            <option>Sonntag</option>
+        </select>
+        <input type="time" id="kurs-startzeit">
+        <select id="kurs-trainer">
+            <option value="">-- automatisch zuweisen --</option>
+        </select>
+        <select id="kurs-raum"></select>
+        <br><br>
+        <button class="btn btn-gruen" onclick="kursSpeichern()">Speichern</button>
+        <button class="btn btn-grau" onclick="kursFormularVerstecken()">Abbrechen</button>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Kurs</th>
+            <th>Wochentag</th>
+            <th>Uhrzeit</th>
+            <th>Standort</th>
+            <th>Trainer</th>
+            <th>Vertretung</th>
+            <th>Status</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+        <tbody id="kurs-tabelle-body"></tbody>
+    </table>
+</div>
+
+<!-- ================= TAB: MITARBEITER ================= -->
+<div id="tab-mitarbeiter" class="tab-inhalt">
+    <div class="abschnitt-kopf">
+        <h2>Mitarbeiterverwaltung</h2>
+        <button class="btn btn-gruen" onclick="mitarbeiterFormularAnzeigen()">+ Neuer Mitarbeiter</button>
+    </div>
+
+    <div id="mitarbeiter-formular" class="formular-box versteckt">
+        <input type="hidden" id="ma-id">
+        <input type="text" id="ma-vorname" placeholder="Vorname">
+        <input type="text" id="ma-nachname" placeholder="Nachname">
+        <input type="email" id="ma-email" placeholder="E-Mail">
+        <input type="password" id="ma-passwort" placeholder="Passwort">
+        <select id="ma-rolle" onchange="rolleGeaendert()">
+            <option value="TRAINER">Trainer</option>
+            <option value="ADMIN">Admin</option>
+        </select>
+        <select id="ma-typ">
+            <option value="VOLLZEIT">Vollzeit</option>
+            <option value="TEILZEIT">Teilzeit</option>
+        </select>
+        <select id="ma-studio"></select>
+        <br><br>
+        <button class="btn btn-gruen" onclick="mitarbeiterSpeichern()">Speichern</button>
+        <button class="btn btn-grau" onclick="mitarbeiterFormularVerstecken()">Abbrechen</button>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>E-Mail</th>
+            <th>Rolle</th>
+            <th>Typ</th>
+            <th>Standort</th>
+            <th>Max. Kurse/Woche</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+        <tbody id="mitarbeiter-tabelle-body"></tbody>
+    </table>
+</div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
